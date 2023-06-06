@@ -18,6 +18,7 @@ RUN apt-get update -y && \
     cp .env.example .env && \
     npm install -g pnpm && \
     pnpm install && \
+    pnpm prune --prod && \
     chown -R 1000:1000 /app
 
 USER 1000
