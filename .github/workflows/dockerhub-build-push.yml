@@ -1,9 +1,9 @@
-name: Build on master push
+name: Build on main push
 
 on:
   push:
     branches:
-      - master
+      - main
 
 env:
   DOCKER_CLI_EXPERIMENTAL: enabled
