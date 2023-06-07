@@ -1,6 +1,6 @@
 ARG GIT_TAG=${GIT_TAG:-main}
 
-FROM node:lts-bullseye
+FROM node:lts-alpine3.18
 
 ARG GIT_TAG
 
@@ -8,12 +8,7 @@ ENV HOME=/app
 
 WORKDIR /app
 
-RUN apt-get update -y && \
-    apt-get upgrade -y && \
-    apt-get install -y --no-install-recommends git && \
-    apt-get autoclean -y && \
-    apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/* && \
+RUN apk add --no-cache git && \
     npm install -g pnpm && \
     git clone --force -b ${GIT_TAG} --depth 1 https://github.com/zyachel/quetre.git . && \
     cp .env.example .env && \

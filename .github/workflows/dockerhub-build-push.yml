@@ -37,12 +37,22 @@ jobs:
         uses: docker/setup-buildx-action@v1
         id: buildx
 
-      - name: Run Docker buildx for slim release
+      - name: Run Docker buildx for alpine
+        run: |
+          docker buildx build \
+          --platform linux/amd64,linux/arm64 \
+          --file ./Dockerfile.alpine \
+          --build-arg GIT_TAG=${{ steps.keydb.outputs.tag_name }} \
+          --tag ${{ secrets.DOCKERHUB_USERNAME }}/quetre:${{ steps.keydb.outputs.tag_name }} \
+          --tag ${{ secrets.DOCKERHUB_USERNAME }}/quetre:latest \
+          --push .
+
+      - name: Run Docker buildx for bullseye
         run: |
           docker buildx build \
           --platform linux/amd64,linux/arm64 \
           --file ./Dockerfile \
           --build-arg GIT_TAG=${{ steps.keydb.outputs.tag_name }} \
           --tag ${{ secrets.DOCKERHUB_USERNAME }}/quetre:${{ steps.keydb.outputs.tag_name }} \
-          --tag ${{ secrets.DOCKERHUB_USERNAME }}/quetre:latest \
+          --tag ${{ secrets.DOCKERHUB_USERNAME }}/quetre:latest-bullseye \
           --push .
