@@ -17,8 +17,8 @@ RUN apt-get update -y && \
     npm install -g pnpm && \
     git clone -b ${GIT_TAG} --depth 1 https://github.com/zyachel/quetre.git && \
     mv quetre/* . && \
+    mv quetre/.env.example .env && \
     rm -r quetre && \
-    cp .env.example .env && \
     pnpm install --prod && \
     chown -R 1000:1000 /app
 
