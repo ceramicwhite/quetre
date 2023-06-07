@@ -15,7 +15,9 @@ RUN apt-get update -y && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/* && \
     npm install -g pnpm && \
-    git clone --force -b ${GIT_TAG} --depth 1 https://github.com/zyachel/quetre.git . && \
+    git clone -b ${GIT_TAG} --depth 1 https://github.com/zyachel/quetre.git && \
+    mv quetre/* . && \
+    rm -r quetre && \
     cp .env.example .env && \
     pnpm install --prod && \
     chown -R 1000:1000 /app
